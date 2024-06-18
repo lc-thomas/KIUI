@@ -8,6 +8,7 @@
 // @match    *://kraland.org/*
 // @icon     https://www.google.com/s2/favicons?sz=64&domain=kraland.org
 // @grant    none
+// @projectSource https://raw.githubusercontent.com/lc-thomas/KIUI/master/KIUI.js
 // ==/UserScript==
 
 /*
