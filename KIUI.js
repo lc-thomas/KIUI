@@ -108,22 +108,25 @@ class KIUIButton {
     let tbody = document.querySelector('.left-frame>table>tbody')
     let characters = tbody.querySelectorAll('tr>td.tdb, tr>td.tdb1, tr>td.tdb2, tr>td.tdb3')
     characters.forEach(function(character, i) {
+      let conteurs = 0
       if (character.querySelector('.corner') == null) {
         // Le personnage n'a pas de drapeau, certainement un PNJ Conteur... On laisse filer
+        // En gardant la trace pour éviter notre propre perso
+        conteurs += 1
         return;
       }
       // Il nous reste les PJ et PNJs type employés
       if (character.classList.contains('tdb')) {
         // PJs seulement
-        // Signalement de présence
-        let presenceButton = new KIUIButton(character.querySelector('.corner'), 'character', 'https://i.imgur.com/1MdjKdC.png', character.querySelector('a').href, '300029', currentPage, function(form) {
-          form.querySelector('textarea').value = "Vu !"
-        })
-        // Capture
-        let captureButton = new KIUIButton(character.querySelector('.corner'), 'character', 'https://i.imgur.com/VpmJff4.png', character.querySelector('a').href, '300021', currentPage)
-        // Assassin - Peur (PJ seulement, aucun intérêt sur les PNJ)
-        if (carrierePerso == 'Assassin') {
-          if (i != 0) {
+        if(i - conteurs > 0){ // Not our character
+          // Signalement de présence
+          let presenceButton = new KIUIButton(character.querySelector('.corner'), 'character', 'https://i.imgur.com/1MdjKdC.png', character.querySelector('a').href, '300029', currentPage, function(form) {
+            form.querySelector('textarea').value = "Vu !"
+          })
+          // Capture
+          let captureButton = new KIUIButton(character.querySelector('.corner'), 'character', 'https://i.imgur.com/VpmJff4.png', character.querySelector('a').href, '300021', currentPage)
+          // Assassin - Peur (PJ seulement, aucun intérêt sur les PNJ)
+          if (carrierePerso == 'Assassin') {
             let peurButton = new KIUIButton(character.querySelector('.corner'), 'character', 'https://i.imgur.com/YpZo8D8.png', character.querySelector('a').href, '300051', currentPage, function(form) {
               form.querySelector('textarea').value = "[i][gray]* Une ombre terrifiante passe près de vous. *[/gray][/i]"
             })
