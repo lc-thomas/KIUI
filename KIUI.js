@@ -49,8 +49,9 @@ class KIUIButton {
    *
    */
   orderId = ''
-  constructor(prependTo, cls, buttonImageURL, popupURL, orderId, action, clickCB = function() {}) {
+  constructor(prependTo, cls, buttonImageTitle, buttonImageURL, popupURL, orderId, action, clickCB = function() {}) {
     let button = document.createElement('img')
+    button.setAttribute('title', buttonImageTitle)
     button.setAttribute('src', buttonImageURL)
     button.setAttribute('class', `KIUI_icon KIUI_${cls}_icon`)
     button.addEventListener('click', (ev) => {
@@ -95,11 +96,11 @@ class KIUIButton {
     groups.forEach(function(group, i) {
       if (i == 0) {
         // Le premier groupe est le nôtre, ajout des ordres "fouiller" et "se cacher".
-        let seCacherButton = new KIUIButton(group, 'group', 'https://i.imgur.com/ckDpsSi.png', group.querySelector('a').href, '300201', currentPage)
-        let fouillerButton = new KIUIButton(group, 'group', 'https://i.imgur.com/Qy44kaA.png', group.querySelector('a').href, '300203', currentPage)
+        let seCacherButton = new KIUIButton(group, 'group', 'Se cacher', 'https://i.imgur.com/ckDpsSi.png', group.querySelector('a').href, '300201', currentPage)
+        let fouillerButton = new KIUIButton(group, 'group', 'Fouiller', 'https://i.imgur.com/Qy44kaA.png', group.querySelector('a').href, '300203', currentPage)
       } else {
         // Ordres sur les autres groupes : "combattre"
-        let combattreButton = new KIUIButton(group, 'group', 'https://i.imgur.com/HXZRcK3.png', group.querySelector('a').href, '300205', currentPage)
+        let combattreButton = new KIUIButton(group, 'group', 'Combattre', 'https://i.imgur.com/HXZRcK3.png', group.querySelector('a').href, '300205', currentPage)
       }
     })
     /*
@@ -120,14 +121,14 @@ class KIUIButton {
         // PJs seulement
         if(i - conteurs > 0){ // Not our character
           // Signalement de présence
-          let presenceButton = new KIUIButton(character.querySelector('.corner'), 'character', 'https://i.imgur.com/1MdjKdC.png', character.querySelector('a').href, '300029', currentPage, function(form) {
+          let presenceButton = new KIUIButton(character.querySelector('.corner'), 'character', 'Signaler la présence', 'https://i.imgur.com/1MdjKdC.png', character.querySelector('a').href, '300029', currentPage, function(form) {
             form.querySelector('textarea').value = "Vu !"
           })
           // Capture
-          let captureButton = new KIUIButton(character.querySelector('.corner'), 'character', 'https://i.imgur.com/VpmJff4.png', character.querySelector('a').href, '300021', currentPage)
+          let captureButton = new KIUIButton(character.querySelector('.corner'), 'character', 'Capturer', 'https://i.imgur.com/VpmJff4.png', character.querySelector('a').href, '300021', currentPage)
           // Assassin - Peur (PJ seulement, aucun intérêt sur les PNJ)
           if (carrierePerso == 'Assassin') {
-            let peurButton = new KIUIButton(character.querySelector('.corner'), 'character', 'https://i.imgur.com/YpZo8D8.png', character.querySelector('a').href, '300051', currentPage, function(form) {
+            let peurButton = new KIUIButton(character.querySelector('.corner'), 'character', 'Peur', 'https://i.imgur.com/YpZo8D8.png', character.querySelector('a').href, '300051', currentPage, function(form) {
               form.querySelector('textarea').value = "[i][gray]* Une ombre terrifiante passe près de vous. *[/gray][/i]"
             })
           }
@@ -142,7 +143,7 @@ class KIUIButton {
       // Ici c'est sur toutes les lignes, autant PNJ que PJ
       if(i - conteurs > 0){ // Not our character
         if (carrierePerso == 'Assassin') {
-          let assassinerButton = new KIUIButton(character.querySelector('.corner'), 'character', 'https://i.imgur.com/dqSN5lS.png', character.querySelector('a').href, '300072', currentPage, function(form) {
+          let assassinerButton = new KIUIButton(character.querySelector('.corner'), 'character', 'Assassiner', 'https://i.imgur.com/dqSN5lS.png', character.querySelector('a').href, '300072', currentPage, function(form) {
             form.querySelector('textarea').value = "[i][gray]* Une lame se plante dans votre nuque. *[/gray][/i]"
           })
         }
@@ -172,7 +173,7 @@ class KIUIButton {
         }
         // Ici on a plus que le matériel
         // Ajout d'un bouton pour ramasser l'objet
-        let ramasserButton = new KIUIButton(element.querySelector('.tdb'), 'item', 'https://i.imgur.com/cef8Fq5.png', element.querySelector('a').href, '200101', currentPage, function(form) {
+        let ramasserButton = new KIUIButton(element.querySelector('.tdb'), 'item', 'Ramasser', 'https://i.imgur.com/cef8Fq5.png', element.querySelector('a').href, '200101', currentPage, function(form) {
           // Deux possibilités, on a soit un select duquel on va prendre la dernière valeur (la plus grande)
           let select = form.querySelector('select[name="p3"]')
           if (select != null) {
@@ -208,7 +209,7 @@ class KIUIButton {
         // On ignore le trésor et le jeu de clés
         return
       // Bouton "déposer" pour sortir un objet de l'inventaire
-      new KIUIButton(inventory_element.querySelector('.tdb'), 'item', 'https://i.imgur.com/e8M56HI.png', inventory_element.querySelector('a').href, '110001', currentPage, function(form) {
+      new KIUIButton(inventory_element.querySelector('.tdb'), 'item', 'Déposer', 'https://i.imgur.com/e8M56HI.png', inventory_element.querySelector('a').href, '110001', currentPage, function(form) {
         let select = form.querySelector('select[name="p3"]')
         if (select != null) // ça pourrait être un input text si la valeur dépasse une certaine marge...
           select.value = select.lastChild.value // on dépose le plus possible
@@ -216,7 +217,7 @@ class KIUIButton {
       let itemLink = inventory_element.querySelector('a')
       // Bouton convertir sur l'or.
       if (itemLink.innerHTML == 'Ors' || itemLink.innerHTML == 'Or') {
-        new KIUIButton(inventory_element.querySelector('.tdb'), 'item', 'https://i.imgur.com/HvbIQgC.png', inventory_element.querySelector('a').href, '110017', currentPage, function(form) {
+        new KIUIButton(inventory_element.querySelector('.tdb'), 'item', 'Convertir en argent', 'https://i.imgur.com/HvbIQgC.png', inventory_element.querySelector('a').href, '110017', currentPage, function(form) {
           let select = form.querySelector('select[name="p3"]')
           select.value = select.lastChild.value // on convertit le plus d'or possible
         })
@@ -257,6 +258,7 @@ class KIUIButton {
           td = document.createElement('td')
           td.innerHTML = item
           let img = document.createElement('img')
+          img.setAttribute('title', 'Prendre')
           img.setAttribute('src', 'https://i.imgur.com/cef8Fq5.png')
           img.setAttribute('class', 'KIUI_icon KIUI_item_icon')
           let words = item.split(' ')
