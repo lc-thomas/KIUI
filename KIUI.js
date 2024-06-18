@@ -77,7 +77,7 @@ class KIUIButton {
   /*********************
    * PAGE "Se déplacer"
    *********************/
-  if (currentPage == 'main.php?p=2_2') {
+  if (currentPage == 'Se Déplacer') {
     // Carrière du personnage, avec une majuscule, ex: 'Assassin'
     let carrierePerso = document.querySelectorAll('#left > table')[1].querySelectorAll('td > a')[0].innerHTML
     console.log("KIUI - Amélioration de la page 'Se déplacer'")
@@ -198,7 +198,7 @@ class KIUIButton {
   let containerItemsNumbers = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 50, 100
   ]
-  if (currentPage == 'main.php?p=2_1') {
+  if (currentPage == 'Matériel') {
     console.log("KIUI - Amélioration de l'interface de la page 'Matériel'")
     /*
      * Partie gauche de la page matériel
@@ -315,14 +315,7 @@ function locate() {
     location.replace('http://www.kraland.org/main.php')
     return
   }
-  let page = location.href.split('/').pop()
-  if (page == "main.php" || page == 'main.php?p=2' || page.startsWith('main.php?p=2_2')) {
-    return 'main.php?p=2_2'
-  }
-  if (page.startsWith('main.php?p=2_1')) {
-    return 'main.php?p=2_1'
-  }
-  return page
+  return document.querySelector('.sl li.on a').innerHTML
 }
 
 function injectCSS() {
