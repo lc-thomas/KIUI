@@ -107,8 +107,8 @@ class KIUIButton {
      */
     let tbody = document.querySelector('.left-frame>table>tbody')
     let characters = tbody.querySelectorAll('tr>td.tdb, tr>td.tdb1, tr>td.tdb2, tr>td.tdb3')
+    let conteurs = 0
     characters.forEach(function(character, i) {
-      let conteurs = 0
       if (character.querySelector('.corner') == null) {
         // Le personnage n'a pas de drapeau, certainement un PNJ Conteur... On laisse filer
         // En gardant la trace pour éviter notre propre perso
@@ -140,9 +140,8 @@ class KIUIButton {
         // Et les employés de fonction type avion présidentiel c'est tdb3
       }
       // Ici c'est sur toutes les lignes, autant PNJ que PJ
-      /* Assassin - Assassiner (PJ et PNJ) */
-      if (carrierePerso == 'Assassin') {
-        if (i != 0) { // Pas sur le tout premier perso (probablement nous)
+      if(i - conteurs > 0){ // Not our character
+        if (carrierePerso == 'Assassin') {
           let assassinerButton = new KIUIButton(character.querySelector('.corner'), 'character', 'https://i.imgur.com/dqSN5lS.png', character.querySelector('a').href, '300072', currentPage, function(form) {
             form.querySelector('textarea').value = "[i][gray]* Une lame se plante dans votre nuque. *[/gray][/i]"
           })
